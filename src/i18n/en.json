@@ -1,0 +1,11 @@
+{
+    "SAY_WORD_PROMPT": "Say the highlighted word in the frame",
+    "GAME_OVER":"Game Over",
+    "NEW_GAME":"New Game",
+    "END_GAME":"End Game",
+    "CONGRATULATIONS": "Congratulations",
+    "SCORE":"SCORE",
+    "GAMES":"Games",
+    "TIME":"Time"
+
+}
