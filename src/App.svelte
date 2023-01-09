@@ -6,6 +6,7 @@
     init,
     getLocaleFromNavigator,
   } from 'svelte-i18n'
+  import { onMount } from 'svelte'
   import en from './i18n/en.json'
 
   addMessages('en', en)
@@ -14,13 +15,24 @@
     fallbackLocale: 'en',
     initialLocale: getLocaleFromNavigator(),
   })
+
+  let gameLevel = 'Level5'
+
+  onMount(async () => {
+    const url_string = window.location.href
+    const queryString = window.location.search
+    console.log(queryString)
+    const urlParams = new URLSearchParams(queryString)
+    gameLevel = urlParams.get('gameLevel')
+    console.log('gameLevel', gameLevel)
+  })
 </script>
 
 <main>
   <h1>Word Game</h1>
 
   <div class="card">
-    <Game />
+    <Game {gameLevel} />
   </div>
 </main>
 

@@ -1,11 +1,11 @@
 <script>
   import AudioPlayer from './AudioPlayer.svelte'
-  import { flip } from 'svelte/animate'
-  import Keyboard from './Keyboard.svelte'
   import Recognition from './Recognition.svelte'
   import { _ } from 'svelte-i18n'
 
   import { onMount } from 'svelte'
+
+  export let gameLevel
 
   let audioPlayer
   let recognition
@@ -50,7 +50,6 @@
         word: 'sheep',
       },
     ],
-
     restaurant: [
       {
         word: 'waitress',
@@ -82,16 +81,189 @@
       {
         word: 'fork',
       },
-      {
-        word: 'bill',
-      },
-      {
-        word: 'spoon',
-      },
+      { word: 'bill' },
+      { word: 'spoon' },
+    ],
+    Level1: [
+      { word: 'into' },
+      { word: 'suit' },
+      { word: 'sweat' },
+      { word: 'take' },
+      { word: 'target' },
+      { word: 'just' },
+      { word: 'know' },
+      { word: 'like' },
+      { word: 'because' },
+      { word: 'look' },
+      { word: 'make' },
+      { word: 'can' },
+      { word: 'come' },
+      { word: 'could' },
+      { word: 'day' },
+      { word: 'man' },
+      { word: 'even' },
+      { word: 'find' },
+      { word: 'first' },
+      { word: 'many' },
+    ],
+    Level2: [
+      { word: 'from' },
+      { word: 'give' },
+      { word: 'more' },
+      { word: 'have' },
+      { word: 'new' },
+      { word: 'here' },
+      { word: 'him' },
+      { word: 'get' },
+      { word: 'his' },
+      { word: 'not' },
+      { word: 'how' },
+      { word: 'now' },
+      { word: 'target' },
+      { word: 'tell' },
+      { word: 'than' },
+      { word: 'that' },
+      { word: 'out' },
+      { word: 'pear' },
+      { word: 'people' },
+      { word: 'pour' },
+    ],
+    Level3: [
+      { word: 'about' },
+      { word: 'all' },
+      { word: 'also' },
+      { word: 'and' },
+      { word: 'one' },
+      { word: 'only' },
+      { word: 'other' },
+      { word: 'our' },
+      { word: 'say' },
+      { word: 'see' },
+      { word: 'since' },
+      { word: 'some' },
+      { word: 'with' },
+      { word: 'would' },
+      { word: 'year' },
+      { word: 'you' },
+      { word: 'tell' },
+      { word: 'than' },
+      { word: 'that' },
+      { word: 'their' },
+    ],
+    Level4: [
+      { word: 'them' },
+      { word: 'then' },
+      { word: 'there' },
+      { word: 'these' },
+      { word: 'they' },
+      { word: 'thing' },
+      { word: 'think' },
+      { word: 'this' },
+      { word: 'those' },
+      { word: 'who' },
+      { word: 'two' },
+      { word: 'use' },
+      { word: 'very' },
+      { word: 'want' },
+      { word: 'way' },
+      { word: 'well' },
+      { word: 'wet' },
+      { word: 'what' },
+      { word: 'when' },
+      { word: 'which' },
+    ],
+    Level5: [
+      { word: 'ability' },
+      { word: 'alien' },
+      { word: 'angel' },
+      { word: 'ballet' },
+      { word: 'caffeine' },
+      { word: 'calm' },
+      { word: 'rind' },
+      { word: 'orange' },
+      { word: 'chic' },
+      { word: 'climb' },
+      { word: 'island' },
+      { word: 'lettuce' },
+      { word: 'onion' },
+      { word: 'owl' },
+      { word: 'photograph' },
+      { word: 'recipe' },
+      { word: 'salmon' },
+      { word: 'sandwich' },
+      { word: 'vowel' },
+      { word: 'wolf' },
+    ],
+    Level6: [
+      { word: 'column' },
+      { word: 'comb' },
+      { word: 'comfortable' },
+      { word: 'dessert' },
+      { word: 'exercise' },
+      { word: 'fruit' },
+      { word: 'garage' },
+      { word: 'height' },
+      { word: 'hotel' },
+      { word: 'hour' },
+      { word: 'infamous' },
+      { word: 'chaos' },
+      { word: 'change' },
+      { word: 'chorus' },
+      { word: 'concert' },
+      { word: 'lilac' },
+      { word: 'jewelry' },
+      { word: 'dinosaur' },
+      { word: 'saucy' },
+      { word: 'delicious' },
+    ],
+    Level7: [
+      { word: 'Arkansas' },
+      { word: 'albeit' },
+      { word: 'colonel' },
+      { word: 'debris' },
+      { word: 'despicable' },
+      { word: 'epitome' },
+      { word: 'fuchsia' },
+      { word: 'heir' },
+      { word: 'hyperbole' },
+      { word: 'lieutenant' },
+      { word: 'lozenge' },
+      { word: 'miscellaneous' },
+      { word: 'niche' },
+      { word: 'pyramid' },
+      { word: 'queue' },
+      { word: 'subtle' },
+      { word: 'zealot' },
+      { word: 'Yosemite' },
+      { word: 'asterisk' },
+      { word: 'brewery' },
+    ],
+    Level8: [
+      { word: 'cavalry' },
+      { word: 'deteriorate' },
+      { word: 'explicit' },
+      { word: 'February' },
+      { word: 'library' },
+      { word: 'rural' },
+      { word: 'sixth' },
+      { word: 'specific' },
+      { word: 'temperature' },
+      { word: 'charcuterie' },
+      { word: 'mischievous' },
+      { word: 'quinoa' },
+      { word: 'accessory' },
+      { word: 'turmeric' },
+      { word: 'squirrel' },
+      { word: 'cacaphony' },
+      { word: 'ibuprofen' },
+      { word: 'drawers' },
+      { word: 'entrepreneur' },
+      { word: 'finale' },
     ],
   }
 
-  let wordList = wordBank['restaurant']
+  //let wordList = wordBank['restaurant']
+  let wordList
 
   let gameCounter = 0
   let winCounter = 0
@@ -111,39 +283,53 @@
 
   let wordsSaid = []
 
+  onMount(async () => {
+    wordList = wordBank[gameLevel]
+  })
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[array[i], array[j]] = [array[j], array[i]]
+    }
+  }
+
   function start() {
     audioPlayer.playJingle3()
 
     gameCounter++
     pos = 0
     state = 'progress'
+    shuffleArray(wordList)
+    wordList = wordList.slice(0, 5)
+
     selectedWord = wordList[pos].word
 
     console.log(111, selectedWord)
 
     selectedWordDuration = 10000
 
-    gameTimer = 0
+    gameTimer = 45000
 
     lastMessage = ''
 
     clearInterval(gameTimerInterval)
     gameTimerInterval = setInterval(() => {
-      gameTimer += 100
+      gameTimer -= 100
       gameTimerTotal += 100
 
-      if (gameTimer >= 45000) {
-        end()
+      if (gameTimer <= 0) {
+        end('over-loss')
       }
     }, 100)
 
     recognition.startRecognition()
   }
 
-  function end() {
+  function end(resultState) {
     clearInterval(gameTimerInterval)
     recognition.stopRecognition()
-    state = 'over-loss'
+    state = resultState
   }
 
   function msToTime(s) {
@@ -175,9 +361,8 @@
       pos++
       if (pos === wordList.length) {
         audioPlayer.playJingle3()
-        state = 'over-win'
         lastMessage = ''
-        end()
+        end('over-win')
       } else {
         selectedWord = wordList[pos].word
         audioPlayer.playJingle1()
@@ -194,7 +379,17 @@
     audioPlayer.playJingle2()
     lastMessage = 'MISSPRONUNCIATION: ' + JSON.stringify(word)
   }
+
+  function keyboardPress(zEvent) {
+    console.log(zEvent)
+    if (zEvent.ctrlKey && zEvent.altKey && zEvent.key === 'E') {
+      // case sensitive
+      debug = !debug
+    }
+  }
 </script>
+
+<svelte:window on:keydown={keyboardPress} />
 
 <AudioPlayer bind:this={audioPlayer} />
 <Recognition
@@ -217,7 +412,9 @@
   {/if}
 {:else if state === 'progress'}
   <!-- <button class="btn btn-primary" on:click={start}>{$_('RESTART')}</button> -->
-  <button class="btn btn-primary" on:click={end}>{$_('END_GAME')}</button>
+  <button class="btn btn-primary" on:click={() => end('over-loss')}
+    >{$_('END_GAME')}</button
+  >
 {:else if state === 'over-win' || state === 'over-loss'}
   <button class="btn btn-primary" on:click={start}>{$_('NEW_GAME')}</button>
 {/if}
@@ -253,13 +450,7 @@
   {/if}
 </div>
 <br />
-<h3
-  on:click={() => {
-    debug = !debug
-  }}
->
-  DEBUG
-</h3>
+
 {#if debug}
   <div>state:{state}</div>
   <div>time:{msToTime(gameTimer)}</div>

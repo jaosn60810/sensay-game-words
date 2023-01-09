@@ -29,15 +29,28 @@
 
   const dispatch = createEventDispatcher()
 
+  onMount(async () => {
+    // this.addEventListener('keydown', keyboardPress)
+  })
+
+  function keyboardPress(key) {
+    // console.log(777, key)
+    if (key.keyCode >= 65 && key.keyCode <= 90) {
+      dispatch('pressKey', key?.key.toUpperCase())
+    }
+  }
+
   function pressKey(key) {
     dispatch('pressKey', key)
   }
 </script>
 
+<svelte:window on:keydown={keyboardPress} />
+
 {#each keyboard as ln, i}
-  <div style="display: flex;">
+  <div class="key-row">
     {#each Array.from(Object.keys(ln)) as b, j}
-      <div class="">
+      <div class="key-row">
         <button
           class="btn btn-primary btn-key "
           on:click={() => pressKey(keyboard[i][j])}>{keyboard[i][j]}</button
@@ -48,11 +61,17 @@
 {/each}
 
 <style>
+  .key-row {
+    display: flex;
+    justify-content: center;
+  }
+
   .btn-key {
     margin-left: 0.5em;
     margin-right: 0.5em;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    min-width: 2.4em;
   }
 
   @media only screen and (max-width: 800px) {
