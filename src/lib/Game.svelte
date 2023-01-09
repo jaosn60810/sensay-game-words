@@ -283,9 +283,7 @@
 
   let wordsSaid = []
 
-  onMount(async () => {
-    wordList = wordBank[gameLevel]
-  })
+  onMount(async () => {})
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -297,6 +295,8 @@
   function start() {
     audioPlayer.playJingle3()
 
+    console.log('gameLevel', gameLevel)
+    wordList = wordBank[gameLevel]
     gameCounter++
     pos = 0
     state = 'progress'
