@@ -182,7 +182,7 @@
 
       add([text('Press arrow keys to move'), pos(0, 580), scale(0.4)]);
 
-      add([text('Press QW to record and stop '), pos(0, 620), scale(0.4)]);
+      // add([text('Press QW to record and stop '), pos(0, 620), scale(0.4)]);
 
       player = add([
         sprite('link-going-right'),
@@ -324,7 +324,7 @@
     });
 
     go('game', { level: 0, score: 0 });
+
+    document.querySelector('canvas').focus();
   });
 </script>
-
-<!-- <div id={`mygame`} /> -->

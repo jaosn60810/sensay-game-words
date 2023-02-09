@@ -1,7 +1,8 @@
 <script>
   import AudioPlayer from './AudioPlayer.svelte';
   import Recognition from './Recognition.svelte';
-  import GameCanvas from './GameCanvas.svelte';
+  import GameCanvasWrapper from './GameCanvasWrapper.svelte';
+
   import { _ } from 'svelte-i18n';
 
   import { onMount } from 'svelte';
@@ -11,7 +12,7 @@
   let audioPlayer;
   let recognition;
   let ttsButtonState;
-  let gameCanvasRef;
+  let gameCanvasWrapperRef;
 
   let wordBank = {
     animals: [
@@ -361,7 +362,8 @@
     if (word === selectedWord) {
       winCounter++;
       pos++;
-      gameCanvasRef.spawnKaboom();
+      gameCanvasWrapperRef.spawnKaboom();
+
       if (pos === wordList.length) {
         audioPlayer.playJingle3();
         lastMessage = '';
@@ -394,7 +396,21 @@
 
 <svelte:window on:keydown={keyboardPress} />
 
-<GameCanvas bind:this={gameCanvasRef} />
+<!-- <GameCanvas bind:this={gameCanvasRef} /> -->
+<!-- <GameCanvas2 bind:this={gameCanvasRef} /> -->
+
+<!-- <select bind:value={selected}>
+  {#each options as option}
+    <option value={option}>{option.gameType}</option>
+  {/each}
+</select>
+
+{#if state === 'progress'}
+  <svelte:component this={selected.component} bind:this={gameCanvasRef} />
+{/if} -->
+
+<GameCanvasWrapper bind:this={gameCanvasWrapperRef} {state} />
+
 <AudioPlayer bind:this={audioPlayer} />
 <Recognition
   bind:this={recognition}
