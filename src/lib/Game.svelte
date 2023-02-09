@@ -1,15 +1,17 @@
 <script>
-  import AudioPlayer from './AudioPlayer.svelte'
-  import Recognition from './Recognition.svelte'
-  import { _ } from 'svelte-i18n'
+  import AudioPlayer from './AudioPlayer.svelte';
+  import Recognition from './Recognition.svelte';
+  import GameCanvas from './GameCanvas.svelte';
+  import { _ } from 'svelte-i18n';
 
-  import { onMount } from 'svelte'
+  import { onMount } from 'svelte';
 
-  export let gameLevel
+  export let gameLevel;
 
-  let audioPlayer
-  let recognition
-  let ttsButtonState
+  let audioPlayer;
+  let recognition;
+  let ttsButtonState;
+  let gameCanvasRef;
 
   let wordBank = {
     animals: [
@@ -260,137 +262,139 @@
       { word: 'entrepreneur' },
       { word: 'finale' },
     ],
-  }
+  };
 
   //let wordList = wordBank['restaurant']
-  let wordList
+  let wordList;
 
-  let gameCounter = 0
-  let winCounter = 0
-  let state = 'new'
+  let gameCounter = 0;
+  let winCounter = 0;
+  let state = 'new';
 
-  let selectedWord = ''
-  let selectedWordDuration
-  let pos = 0
+  let selectedWord = '';
+  let selectedWordDuration;
+  let pos = 0;
 
-  let gameTimer = 0
-  let gameTimerInterval
-  let gameTimerTotal = 0
+  let gameTimer = 0;
+  let gameTimerInterval;
+  let gameTimerTotal = 0;
 
-  let lastMessage
+  let lastMessage;
 
-  let debug = false
+  let debug = false;
 
-  let wordsSaid = []
+  let wordsSaid = [];
 
-  onMount(async () => {})
+  onMount(async () => {});
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[array[i], array[j]] = [array[j], array[i]]
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
   }
 
   function start() {
-    audioPlayer.playJingle3()
+    audioPlayer.playJingle3();
 
-    console.log('gameLevel', gameLevel)
-    wordList = wordBank[gameLevel]
-    gameCounter++
-    pos = 0
-    state = 'progress'
-    shuffleArray(wordList)
-    wordList = wordList.slice(0, 5)
+    console.log('gameLevel', gameLevel);
+    wordList = wordBank[gameLevel];
+    gameCounter++;
+    pos = 0;
+    state = 'progress';
+    shuffleArray(wordList);
+    wordList = wordList.slice(0, 5);
 
-    selectedWord = wordList[pos].word
+    selectedWord = wordList[pos].word;
 
-    console.log(111, selectedWord)
+    console.log(111, selectedWord);
 
-    selectedWordDuration = 10000
+    selectedWordDuration = 10000;
 
-    gameTimer = 45000
+    gameTimer = 45000;
 
-    lastMessage = ''
+    lastMessage = '';
 
-    clearInterval(gameTimerInterval)
+    clearInterval(gameTimerInterval);
     gameTimerInterval = setInterval(() => {
-      gameTimer -= 100
-      gameTimerTotal += 100
+      gameTimer -= 100;
+      gameTimerTotal += 100;
 
       if (gameTimer <= 0) {
-        end('over-loss')
+        end('over-loss');
       }
-    }, 100)
+    }, 100);
 
-    recognition.startRecognition()
+    recognition.startRecognition();
   }
 
   function end(resultState) {
-    clearInterval(gameTimerInterval)
-    recognition.stopRecognition()
-    state = resultState
+    clearInterval(gameTimerInterval);
+    recognition.stopRecognition();
+    state = resultState;
   }
 
   function msToTime(s) {
     // Pad to 2 or 3 digits, default is 2
     function pad(n, z) {
-      z = z || 2
-      return ('00' + n).slice(-z)
+      z = z || 2;
+      return ('00' + n).slice(-z);
     }
 
-    var ms = s % 1000
-    s = (s - ms) / 1000
-    var secs = s % 60
-    s = (s - secs) / 60
-    var mins = s % 60
-    var hrs = (s - mins) / 60
+    var ms = s % 1000;
+    s = (s - ms) / 1000;
+    var secs = s % 60;
+    s = (s - secs) / 60;
+    var mins = s % 60;
+    var hrs = (s - mins) / 60;
 
-    return pad(mins) + ':' + pad(secs)
+    return pad(mins) + ':' + pad(secs);
     // return pad(hrs) + ':' + pad(mins) + ':' + pad(secs) + '.' + pad(ms, 3)
   }
 
   function processWord(event) {
-    let word = event.detail
+    let word = event.detail;
 
-    wordsSaid.push({ word: word, timestamp: gameTimer })
-    console.log(666, wordsSaid)
+    wordsSaid.push({ word: word, timestamp: gameTimer });
+    console.log(666, wordsSaid);
 
     if (word === selectedWord) {
-      winCounter++
-      pos++
+      winCounter++;
+      pos++;
+      gameCanvasRef.spawnKaboom();
       if (pos === wordList.length) {
-        audioPlayer.playJingle3()
-        lastMessage = ''
-        end('over-win')
+        audioPlayer.playJingle3();
+        lastMessage = '';
+        end('over-win');
       } else {
-        selectedWord = wordList[pos].word
-        audioPlayer.playJingle1()
-        lastMessage = ''
+        selectedWord = wordList[pos].word;
+        audioPlayer.playJingle1();
+        lastMessage = '';
       }
     } else {
-      audioPlayer.playJingle2()
-      lastMessage = 'WRONG_WORD: ' + JSON.stringify(word)
+      audioPlayer.playJingle2();
+      lastMessage = 'WRONG_WORD: ' + JSON.stringify(word);
     }
   }
 
   function mispronunciation(event) {
-    let word = event.detail
-    audioPlayer.playJingle2()
-    lastMessage = 'MISSPRONUNCIATION: ' + JSON.stringify(word)
+    let word = event.detail;
+    audioPlayer.playJingle2();
+    lastMessage = 'MISSPRONUNCIATION: ' + JSON.stringify(word);
   }
 
   function keyboardPress(zEvent) {
-    console.log(zEvent)
+    console.log(zEvent);
     if (zEvent.ctrlKey && zEvent.altKey && zEvent.key === 'E') {
       // case sensitive
-      debug = !debug
+      debug = !debug;
     }
   }
 </script>
 
 <svelte:window on:keydown={keyboardPress} />
 
+<GameCanvas bind:this={gameCanvasRef} />
 <AudioPlayer bind:this={audioPlayer} />
 <Recognition
   bind:this={recognition}
