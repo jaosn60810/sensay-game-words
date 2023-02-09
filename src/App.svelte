@@ -1,31 +1,31 @@
 <script>
-  import Game from './lib/Game.svelte'
+  import Game from './lib/Game.svelte';
   import {
     addMessages,
     register,
     init,
     getLocaleFromNavigator,
-  } from 'svelte-i18n'
-  import { onMount } from 'svelte'
-  import en from './i18n/en.json'
+  } from 'svelte-i18n';
+  import { onMount } from 'svelte';
+  import en from './i18n/en.json';
 
-  addMessages('en', en)
+  addMessages('en', en);
 
   init({
     fallbackLocale: 'en',
     initialLocale: getLocaleFromNavigator(),
-  })
+  });
 
-  let gameLevel = 'Level5'
+  let gameLevel = 'Level5';
 
   onMount(async () => {
-    const url_string = window.location.href
-    const queryString = window.location.search
-    console.log(queryString)
-    const urlParams = new URLSearchParams(queryString)
-    gameLevel = urlParams.get('gameLevel')
-    console.log('gameLevel', gameLevel)
-  })
+    const url_string = window.location.href;
+    const queryString = window.location.search;
+    console.log(queryString);
+    const urlParams = new URLSearchParams(queryString);
+    gameLevel = urlParams.get('gameLevel');
+    console.log('gameLevel', gameLevel);
+  });
 </script>
 
 <main>
